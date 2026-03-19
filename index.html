@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fencrypt</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+body {
+font-family: 'Inter', sans-serif;
+background-color: #ffffff;
+color: #000000;
+}
+.bg-gradient-black {
+background: linear-gradient(135deg, #383838 0%, #000000 100%);
+}
+.text-gradient-black {
+background: linear-gradient(135deg, #555555 0%, #000000 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+.card-shadow {
+box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
+}
+.hover-scale {
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.hover-scale:hover {
+transform: translateY(-2px);
+box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+}
+#modal-overlay {
+backdrop-filter: blur(4px);
+}
+</style>
+</head>
+<body class="min-h-screen flex flex-col items-center selection:bg-black selection:text-white">
+
+<nav class="w-full max-w-5xl px-6 py-8 flex justify-between items-center">
+<img src="logo.png" alt="Fencrypt Logo" class="h-10 object-contain" onerror="this.style.display='none'">
+<div class="text-xl font-bold tracking-widest text-gradient-black uppercase">Fencrypt</div>
+</nav>
+
+<main class="w-full max-w-5xl px-6 flex-grow flex flex-col items-center pb-20">
+<div class="w-full flex justify-center mb-12 mt-4">
+<img src="banner.png" alt="Fencrypt Banner" class="max-w-full h-auto max-h-48 object-contain" onerror="this.style.display='none'">
+</div>
+
+<div class="text-center max-w-2xl mb-16">
+<h1 class="text-5xl font-extrabold mb-6 text-gradient-black tracking-tight">Secure Your Discord.</h1>
+<p class="text-gray-600 text-lg mb-10 leading-relaxed">
+Advanced string and media encryption algorithm directly integrated into your server. Keep your sensitive data locked down with UI-based whitelisting.
+</p>
+<button id="auth-btn" class="bg-gradient-black text-white font-semibold py-4 px-10 rounded-full text-lg hover-scale inline-flex items-center gap-2">
+<i data-lucide="shield-check"></i>
+Authorize App
+</button>
+</div>
+
+<div class="w-full">
+<h2 class="text-3xl font-bold mb-8 text-center text-gradient-black">Command Reference</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<div class="bg-white border border-gray-100 rounded-2xl p-8 card-shadow hover-scale flex flex-col">
+<div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+<i data-lucide="lock" class="text-black"></i>
+</div>
+<h3 class="text-xl font-bold mb-2">/encrypt</h3>
+<p class="text-gray-600 text-sm mb-6 flex-grow">Encrypt text and optional media. Generates a cipher or a downloadable hash file.</p>
+<div class="space-y-3">
+<div class="flex flex-col">
+<span class="font-semibold text-sm">message</span>
+<span class="text-xs text-gray-500">Required. Target string.</span>
+</div>
+<div class="flex flex-col">
+<span class="font-semibold text-sm">whitelist_ids</span>
+<span class="text-xs text-gray-500">Optional. Comma-separated Discord IDs.</span>
+</div>
+<div class="flex flex-col">
+<span class="font-semibold text-sm">image_upload</span>
+<span class="text-xs text-gray-500">Optional. Upload file (max 10MB).</span>
+</div>
+<div class="flex flex-col">
+<span class="font-semibold text-sm">image_link</span>
+<span class="text-xs text-gray-500">Optional. Image URL (max 10MB).</span>
+</div>
+</div>
+</div>
+
+<div class="bg-white border border-gray-100 rounded-2xl p-8 card-shadow hover-scale flex flex-col">
+<div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+<i data-lucide="unlock" class="text-black"></i>
+</div>
+<h3 class="text-xl font-bold mb-2">/decrypt</h3>
+<p class="text-gray-600 text-sm mb-6 flex-grow">Decrypt a String or File. Validates against the whitelist automatically.</p>
+<div class="space-y-3">
+<div class="flex flex-col">
+<span class="font-semibold text-sm">hash_str</span>
+<span class="text-xs text-gray-500">Optional. Ciphertext to process.</span>
+</div>
+<div class="flex flex-col">
+<span class="font-semibold text-sm">file</span>
+<span class="text-xs text-gray-500">Optional. Upload .txt file if hash is too large.</span>
+</div>
+<div class="mt-4 text-xs text-gray-400 italic">
+*Must provide either hash_str or file.
+</div>
+</div>
+</div>
+
+<div class="bg-white border border-gray-100 rounded-2xl p-8 card-shadow hover-scale flex flex-col">
+<div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+<i data-lucide="mouse-pointer-click" class="text-black"></i>
+</div>
+<h3 class="text-xl font-bold mb-2">Context Menu</h3>
+<p class="text-gray-600 text-sm mb-6 flex-grow">Quickly select media from chat without downloading it.</p>
+<div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
+<p class="text-sm font-medium mb-1">How to use:</p>
+<ol class="text-xs text-gray-600 list-decimal pl-4 space-y-1">
+<li>Right click any message with an image.</li>
+<li>Go to <strong>Apps</strong>.</li>
+<li>Select <strong>Choose image</strong>.</li>
+<li>Run <code class="bg-gray-200 px-1 rounded text-black">/encrypt</code> to process it.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<div id="modal-overlay" class="fixed inset-0 bg-black/60 hidden z-50 flex items-center justify-center p-4">
+<div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl transform transition-all">
+<div class="flex items-center gap-3 mb-4 text-red-600">
+<i data-lucide="alert-triangle" class="w-8 h-8"></i>
+<h3 class="text-2xl font-bold">Strict Warning</h3>
+</div>
+<p class="text-gray-800 font-medium mb-6 bg-red-50 p-4 rounded-xl border border-red-100">
+Do NOT use this bot for 18+ content or doxxing encryption/decryption. Violations will result in permanent blacklisting.
+</p>
+<div class="flex items-start gap-3 mb-2">
+<input type="checkbox" id="agree-check" class="mt-1 w-5 h-5 rounded border-gray-300 text-black focus:ring-black accent-black cursor-pointer">
+<label for="agree-check" class="text-sm text-gray-600 cursor-pointer select-none">
+I agree to the 
+<a href="https://docs.google.com/document/d/1YqlwdaOj9Ll-r6MxfPO7ppPfL_HUwvIVR88KrlJYC8U/edit?usp=sharing" target="_blank" class="text-black font-semibold underline underline-offset-2">TOS</a> 
+and 
+<a href="https://docs.google.com/document/d/1qkL9c6l73ro8HLp-v_2lXRy2YlCWKMCXq325k0dIVe0/edit?usp=sharing" target="_blank" class="text-black font-semibold underline underline-offset-2">Privacy Policy</a>.
+</label>
+</div>
+<p id="error-msg" class="text-red-500 text-sm h-5 hidden mb-4 font-medium">You must check the agreement box to continue.</p>
+<div class="flex gap-4 mt-6">
+<button id="cancel-btn" class="flex-1 py-3 px-4 rounded-xl font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors">
+Cancel
+</button>
+<button id="proceed-btn" class="flex-1 py-3 px-4 rounded-xl font-semibold text-white bg-gradient-black transition-opacity hover:opacity-90">
+Continue
+</button>
+</div>
+</div>
+</div>
+
+<script>
+lucide.createIcons();
+
+const authBtn = document.getElementById('auth-btn');
+const modalOverlay = document.getElementById('modal-overlay');
+const cancelBtn = document.getElementById('cancel-btn');
+const proceedBtn = document.getElementById('proceed-btn');
+const agreeCheck = document.getElementById('agree-check');
+const errorMsg = document.getElementById('error-msg');
+
+authBtn.addEventListener('click', () => {
+modalOverlay.classList.remove('hidden');
+agreeCheck.checked = false;
+errorMsg.classList.add('hidden');
+});
+
+cancelBtn.addEventListener('click', () => {
+modalOverlay.classList.add('hidden');
+});
+
+modalOverlay.addEventListener('click', (e) => {
+if (e.target === modalOverlay) {
+modalOverlay.classList.add('hidden');
+}
+});
+
+proceedBtn.addEventListener('click', () => {
+if (agreeCheck.checked) {
+window.location.href = 'https://discord.com/oauth2/authorize?client_id=1483972240084177136';
+} else {
+errorMsg.classList.remove('hidden');
+}
+});
+
+agreeCheck.addEventListener('change', () => {
+if (agreeCheck.checked) {
+errorMsg.classList.add('hidden');
+}
+});
+</script>
+</body>
+</html>
