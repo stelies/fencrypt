@@ -6,199 +6,312 @@
 <title>Fencrypt</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
 <style>
-body {
-font-family: 'Inter', sans-serif;
-background-color: #ffffff;
-color: #000000;
-}
-.bg-gradient-black {
-background: linear-gradient(135deg, #383838 0%, #000000 100%);
-}
-.text-gradient-black {
-background: linear-gradient(135deg, #555555 0%, #000000 100%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-}
-.card-shadow {
-box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.1);
-}
-.hover-scale {
-transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-.hover-scale:hover {
-transform: translateY(-2px);
-box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
-}
-#modal-overlay {
-backdrop-filter: blur(4px);
-}
+    body {
+        font-family: 'Inter', sans-serif;
+        background-color: #fafafa;
+        color: #000000;
+        overflow-x: hidden;
+    }
+    
+    .bg-mesh {
+        background-color: #ffffff;
+        background-image: 
+            radial-gradient(at 40% 20%, hsla(0,0%,96%,1) 0px, transparent 50%),
+            radial-gradient(at 80% 0%, hsla(0,0%,98%,1) 0px, transparent 50%),
+            radial-gradient(at 0% 50%, hsla(0,0%,95%,1) 0px, transparent 50%);
+    }
+
+    .bg-gradient-black {
+        background: linear-gradient(135deg, #1f1f1f 0%, #000000 100%);
+    }
+    
+    .text-gradient-black {
+        background: linear-gradient(135deg, #4b4b4b 0%, #000000 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .card-shadow {
+        box-shadow: 0 4px 24px -8px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0,0,0,0.02);
+    }
+    
+    .hover-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0,0,0,0.05);
+    }
+
+    .btn-glow {
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    
+    .btn-glow:hover {
+        box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.4);
+        transform: translateY(-2px);
+    }
+
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    .animate-fade-up {
+        animation: fadeUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    #modal-overlay {
+        backdrop-filter: blur(8px);
+        transition: opacity 0.3s ease;
+    }
+    
+    .modal-content {
+        transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
 </style>
 </head>
-<body class="min-h-screen flex flex-col items-center selection:bg-black selection:text-white">
+<body class="min-h-screen flex flex-col items-center selection:bg-black selection:text-white bg-mesh">
 
-<nav class="w-full max-w-5xl px-6 py-8 flex justify-between items-center">
-<img src="logo.png" alt="Fencrypt Logo" class="h-10 object-contain" onerror="this.style.display='none'">
-<div class="text-xl font-bold tracking-widest text-gradient-black uppercase">Fencrypt</div>
+<!-- Navigation -->
+<nav class="w-full max-w-6xl px-6 py-8 flex justify-center items-center z-10 relative">
+    <div class="flex items-center gap-3">
+        <img src="logo.png" alt="Fencrypt Logo" class="h-10 w-auto object-contain drop-shadow-sm" onerror="this.style.display='none'">
+        <div class="text-2xl font-extrabold tracking-widest text-gradient-black uppercase">Fencrypt</div>
+    </div>
 </nav>
 
-<main class="w-full max-w-5xl px-6 flex-grow flex flex-col items-center pb-20">
-<div class="w-full flex justify-center mb-12 mt-4">
-<img src="banner.png" alt="Fencrypt Banner" class="max-w-full h-auto max-h-48 object-contain" onerror="this.style.display='none'">
-</div>
+<!-- Main Content -->
+<main class="w-full max-w-6xl px-6 flex-grow flex flex-col items-center pb-24 z-10 relative">
+    
+    <!-- Hero Section -->
+    <div class="w-full flex justify-center mb-8 mt-4 lg:mt-12 opacity-0 animate-fade-up" style="animation-delay: 0.1s;">
+        <div class="relative animate-float">
+            <div class="absolute inset-0 bg-gray-200 rounded-full blur-3xl opacity-20 -z-10 transform scale-110"></div>
+            <img src="banner.png" alt="Fencrypt Banner" class="max-w-full h-auto max-h-56 object-contain drop-shadow-xl" onerror="this.style.display='none'">
+        </div>
+    </div>
 
-<div class="text-center max-w-2xl mb-16">
-<h1 class="text-5xl font-extrabold mb-6 text-gradient-black tracking-tight">Secure Your Discord.</h1>
-<p class="text-gray-600 text-lg mb-10 leading-relaxed">
-Advanced string and media encryption algorithm directly integrated into your server. Keep your sensitive data locked down with UI-based whitelisting.
-</p>
-<button id="auth-btn" class="bg-gradient-black text-white font-semibold py-4 px-10 rounded-full text-lg hover-scale inline-flex items-center gap-2">
-<i data-lucide="shield-check"></i>
-Authorize App
-</button>
-</div>
+    <div class="text-center max-w-3xl mb-24 opacity-0 animate-fade-up" style="animation-delay: 0.2s;">
+        <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-gradient-black tracking-tighter leading-tight">
+            Secure Your Discord.
+        </h1>
+        <p class="text-gray-500 text-lg md:text-xl mb-10 leading-relaxed max-w-2xl mx-auto font-medium">
+            Advanced string and media encryption algorithm directly integrated into your server. Keep your sensitive data locked down with UI-based whitelisting.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+            <button id="auth-btn" class="bg-gradient-black text-white font-semibold py-4 px-10 rounded-2xl text-lg btn-glow inline-flex items-center gap-3 w-full sm:w-auto justify-center border border-gray-800">
+                <i data-lucide="shield-check" class="w-6 h-6"></i>
+                Authorize App
+            </button>
+            <a href="#commands" class="py-4 px-10 rounded-2xl text-lg font-semibold text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 transition-all w-full sm:w-auto text-center card-shadow">
+                View Commands
+            </a>
+        </div>
+    </div>
 
-<div class="w-full">
-<h2 class="text-3xl font-bold mb-8 text-center text-gradient-black">Command Reference</h2>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-<div class="bg-white border border-gray-100 rounded-2xl p-8 card-shadow hover-scale flex flex-col">
-<div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-6">
-<i data-lucide="lock" class="text-black"></i>
-</div>
-<h3 class="text-xl font-bold mb-2">/encrypt</h3>
-<p class="text-gray-600 text-sm mb-6 flex-grow">Encrypt text and optional media. Generates a cipher or a downloadable hash file.</p>
-<div class="space-y-3">
-<div class="flex flex-col">
-<span class="font-semibold text-sm">message</span>
-<span class="text-xs text-gray-500">Required. Target string.</span>
-</div>
-<div class="flex flex-col">
-<span class="font-semibold text-sm">whitelist_ids</span>
-<span class="text-xs text-gray-500">Optional. Comma-separated Discord IDs.</span>
-</div>
-<div class="flex flex-col">
-<span class="font-semibold text-sm">image_upload</span>
-<span class="text-xs text-gray-500">Optional. Upload file (max 10MB).</span>
-</div>
-<div class="flex flex-col">
-<span class="font-semibold text-sm">image_link</span>
-<span class="text-xs text-gray-500">Optional. Image URL (max 10MB).</span>
-</div>
-</div>
-</div>
+    <!-- Command Reference -->
+    <div id="commands" class="w-full pt-12 opacity-0 animate-fade-up" style="animation-delay: 0.4s;">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-gradient-black tracking-tight">Command Reference</h2>
+            <p class="text-gray-500 font-medium">Everything you need to secure your server's communications.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+            
+            <!-- Encrypt Card -->
+            <div class="bg-white border border-gray-100 rounded-[2rem] p-8 card-shadow transition-all duration-300 hover-card flex flex-col relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-bl-full -z-10 group-hover:bg-gray-100 transition-colors"></div>
+                <div class="w-14 h-14 bg-white border shadow-sm rounded-2xl flex items-center justify-center mb-6">
+                    <i data-lucide="lock" class="text-black w-7 h-7"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 tracking-tight">/encrypt</h3>
+                <p class="text-gray-500 text-sm mb-8 flex-grow leading-relaxed">Encrypt text and optional media. Generates a cipher or a downloadable hash file.</p>
+                
+                <div class="space-y-4 pt-6 border-t border-gray-100">
+                    <div class="flex flex-col gap-1">
+                        <span class="font-bold text-sm text-gray-900 flex justify-between">message <span class="text-red-500 text-xs font-semibold bg-red-50 px-2 py-0.5 rounded">Required</span></span>
+                        <span class="text-xs text-gray-500">Target string to encrypt.</span>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <span class="font-bold text-sm text-gray-900 flex justify-between">whitelist_ids <span class="text-gray-400 text-xs font-medium">Optional</span></span>
+                        <span class="text-xs text-gray-500">Comma-separated Discord IDs.</span>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <span class="font-bold text-sm text-gray-900 flex justify-between">media_upload <span class="text-gray-400 text-xs font-medium">Optional</span></span>
+                        <span class="text-xs text-gray-500">Upload Image/GIF (max 10MB).</span>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <span class="font-bold text-sm text-gray-900 flex justify-between">media_link <span class="text-gray-400 text-xs font-medium">Optional</span></span>
+                        <span class="text-xs text-gray-500">Image/GIF URL (max 10MB).</span>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <span class="font-bold text-sm text-gray-900 flex justify-between">ephemeral <span class="text-gray-400 text-xs font-medium">Optional</span></span>
+                        <span class="text-xs text-gray-500">Hide output from others.</span>
+                    </div>
+                </div>
+            </div>
 
-<div class="bg-white border border-gray-100 rounded-2xl p-8 card-shadow hover-scale flex flex-col">
-<div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-6">
-<i data-lucide="unlock" class="text-black"></i>
-</div>
-<h3 class="text-xl font-bold mb-2">/decrypt</h3>
-<p class="text-gray-600 text-sm mb-6 flex-grow">Decrypt a String or File. Validates against the whitelist automatically.</p>
-<div class="space-y-3">
-<div class="flex flex-col">
-<span class="font-semibold text-sm">hash_str</span>
-<span class="text-xs text-gray-500">Optional. Ciphertext to process.</span>
-</div>
-<div class="flex flex-col">
-<span class="font-semibold text-sm">file</span>
-<span class="text-xs text-gray-500">Optional. Upload .txt file if hash is too large.</span>
-</div>
-<div class="mt-4 text-xs text-gray-400 italic">
-*Must provide either hash_str or file.
-</div>
-</div>
-</div>
+            <!-- Decrypt Card -->
+            <div class="bg-white border border-gray-100 rounded-[2rem] p-8 card-shadow transition-all duration-300 hover-card flex flex-col relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-bl-full -z-10 group-hover:bg-gray-100 transition-colors"></div>
+                <div class="w-14 h-14 bg-white border shadow-sm rounded-2xl flex items-center justify-center mb-6">
+                    <i data-lucide="unlock" class="text-black w-7 h-7"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 tracking-tight">/decrypt</h3>
+                <p class="text-gray-500 text-sm mb-8 flex-grow leading-relaxed">Decrypt a String or File. Validates against the whitelist automatically.</p>
+                
+                <div class="space-y-4 pt-6 border-t border-gray-100">
+                    <div class="flex flex-col gap-1">
+                        <span class="font-bold text-sm text-gray-900 flex justify-between">hash_str <span class="text-blue-500 text-xs font-semibold bg-blue-50 px-2 py-0.5 rounded">Required*</span></span>
+                        <span class="text-xs text-gray-500">Ciphertext to process.</span>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <span class="font-bold text-sm text-gray-900 flex justify-between">file <span class="text-blue-500 text-xs font-semibold bg-blue-50 px-2 py-0.5 rounded">Required*</span></span>
+                        <span class="text-xs text-gray-500">Upload .txt file if hash is too large.</span>
+                    </div>
+                    <div class="flex flex-col gap-1">
+                        <span class="font-bold text-sm text-gray-900 flex justify-between">ephemeral <span class="text-gray-400 text-xs font-medium">Optional</span></span>
+                        <span class="text-xs text-gray-500">Hide output from others.</span>
+                    </div>
+                    <div class="mt-4 p-3 bg-gray-50 rounded-xl border border-gray-100 text-xs text-gray-500 font-medium">
+                        <i data-lucide="info" class="inline w-3 h-3 mr-1"></i>
+                        *Must provide either hash_str or file.
+                    </div>
+                </div>
+            </div>
 
-<div class="bg-white border border-gray-100 rounded-2xl p-8 card-shadow hover-scale flex flex-col">
-<div class="w-12 h-12 bg-gray-100 rounded-full flex items-center justify-center mb-6">
-<i data-lucide="mouse-pointer-click" class="text-black"></i>
-</div>
-<h3 class="text-xl font-bold mb-2">Context Menu</h3>
-<p class="text-gray-600 text-sm mb-6 flex-grow">Quickly select media from chat without downloading it.</p>
-<div class="bg-gray-50 p-4 rounded-xl border border-gray-100">
-<p class="text-sm font-medium mb-1">How to use:</p>
-<ol class="text-xs text-gray-600 list-decimal pl-4 space-y-1">
-<li>Right click any message with an image.</li>
-<li>Go to <strong>Apps</strong>.</li>
-<li>Select <strong>Choose image</strong>.</li>
-<li>Run <code class="bg-gray-200 px-1 rounded text-black">/encrypt</code> to process it.</li>
-</ol>
-</div>
-</div>
-</div>
-</div>
+            <!-- Context Menu Card -->
+            <div class="bg-white border border-gray-100 rounded-[2rem] p-8 card-shadow transition-all duration-300 hover-card flex flex-col relative overflow-hidden group">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-bl-full -z-10 group-hover:bg-gray-100 transition-colors"></div>
+                <div class="w-14 h-14 bg-white border shadow-sm rounded-2xl flex items-center justify-center mb-6">
+                    <i data-lucide="mouse-pointer-click" class="text-black w-7 h-7"></i>
+                </div>
+                <h3 class="text-2xl font-bold mb-3 tracking-tight">Context Menu</h3>
+                <p class="text-gray-500 text-sm mb-8 flex-grow leading-relaxed">Quickly select media (Images/GIFs) from chat without downloading it.</p>
+                
+                <div class="bg-gray-50 p-5 rounded-2xl border border-gray-100 pt-6">
+                    <p class="text-sm font-bold mb-3 text-gray-900">How to use:</p>
+                    <ol class="text-sm text-gray-600 list-decimal pl-4 space-y-2 font-medium">
+                        <li>Right click any message with media.</li>
+                        <li>Go to <strong class="text-black">Apps</strong>.</li>
+                        <li>Select <strong class="text-black">Choose media</strong>.</li>
+                        <li>Run <code class="bg-white border shadow-sm px-1.5 py-0.5 rounded text-black font-semibold">/encrypt</code> to process.</li>
+                    </ol>
+                </div>
+            </div>
+            
+        </div>
+    </div>
 </main>
 
-<div id="modal-overlay" class="fixed inset-0 bg-black/60 hidden z-50 flex items-center justify-center p-4">
-<div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl transform transition-all">
-<div class="flex items-center gap-3 mb-4 text-red-600">
-<i data-lucide="alert-triangle" class="w-8 h-8"></i>
-<h3 class="text-2xl font-bold">Strict Warning</h3>
-</div>
-<p class="text-gray-800 font-medium mb-6 bg-red-50 p-4 rounded-xl border border-red-100">
-Do NOT use this bot for 18+ content or doxxing encryption/decryption. Violations will result in permanent blacklisting.
-</p>
-<div class="flex items-start gap-3 mb-2">
-<input type="checkbox" id="agree-check" class="mt-1 w-5 h-5 rounded border-gray-300 text-black focus:ring-black accent-black cursor-pointer">
-<label for="agree-check" class="text-sm text-gray-600 cursor-pointer select-none">
-I agree to the 
-<a href="https://docs.google.com/document/d/1YqlwdaOj9Ll-r6MxfPO7ppPfL_HUwvIVR88KrlJYC8U/edit?usp=sharing" target="_blank" class="text-black font-semibold underline underline-offset-2">TOS</a> 
-and 
-<a href="https://docs.google.com/document/d/1qkL9c6l73ro8HLp-v_2lXRy2YlCWKMCXq325k0dIVe0/edit?usp=sharing" target="_blank" class="text-black font-semibold underline underline-offset-2">Privacy Policy</a>.
-</label>
-</div>
-<p id="error-msg" class="text-red-500 text-sm h-5 hidden mb-4 font-medium">You must check the agreement box to continue.</p>
-<div class="flex gap-4 mt-6">
-<button id="cancel-btn" class="flex-1 py-3 px-4 rounded-xl font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors">
-Cancel
-</button>
-<button id="proceed-btn" class="flex-1 py-3 px-4 rounded-xl font-semibold text-white bg-gradient-black transition-opacity hover:opacity-90">
-Continue
-</button>
-</div>
-</div>
+<!-- Footer -->
+<footer class="w-full py-8 border-t border-gray-100 mt-auto text-center z-10 relative bg-white/50 backdrop-blur-sm">
+    <p class="text-gray-400 text-sm font-medium">© 2026 Fencrypt. All rights reserved.</p>
+</footer>
+
+<!-- Modal -->
+<div id="modal-overlay" class="fixed inset-0 bg-black/40 hidden z-50 flex items-center justify-center p-4">
+    <div id="modal-content" class="modal-content bg-white rounded-[2rem] max-w-md w-full p-8 shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
+        <div class="flex items-center gap-3 mb-5 text-red-600 bg-red-50 p-3 rounded-2xl w-fit">
+            <i data-lucide="alert-triangle" class="w-6 h-6"></i>
+            <h3 class="text-xl font-bold">Strict Warning</h3>
+        </div>
+        
+        <p class="text-gray-700 font-medium mb-6 leading-relaxed">
+            Do NOT use this bot for 18+ content or doxxing encryption/decryption. Violations will result in permanent blacklisting.
+        </p>
+        
+        <div class="flex items-start gap-3 mb-2 p-4 border border-gray-100 rounded-2xl bg-gray-50">
+            <input type="checkbox" id="agree-check" class="mt-1 w-5 h-5 rounded border-gray-300 text-black focus:ring-black accent-black cursor-pointer shadow-sm">
+            <label for="agree-check" class="text-sm text-gray-600 cursor-pointer select-none font-medium leading-relaxed">
+                I agree to the 
+                <a href="https://docs.google.com/document/d/1YqlwdaOj9Ll-r6MxfPO7ppPfL_HUwvIVR88KrlJYC8U/edit?usp=sharing" target="_blank" class="text-black font-bold hover:underline underline-offset-2">TOS</a> 
+                and 
+                <a href="https://docs.google.com/document/d/1qkL9c6l73ro8HLp-v_2lXRy2YlCWKMCXq325k0dIVe0/edit?usp=sharing" target="_blank" class="text-black font-bold hover:underline underline-offset-2">Privacy Policy</a>.
+            </label>
+        </div>
+        <p id="error-msg" class="text-red-500 text-sm h-5 hidden mb-4 font-semibold px-2">Please accept the agreement to continue.</p>
+        
+        <div class="flex gap-3 mt-8">
+            <button id="cancel-btn" class="flex-1 py-3.5 px-4 rounded-xl font-bold text-gray-700 bg-white border-2 border-gray-100 hover:bg-gray-50 hover:border-gray-200 transition-all">
+                Cancel
+            </button>
+            <button id="proceed-btn" class="flex-1 py-3.5 px-4 rounded-xl font-bold text-white bg-gradient-black btn-glow transition-all">
+                Continue
+            </button>
+        </div>
+    </div>
 </div>
 
 <script>
-lucide.createIcons();
+    lucide.createIcons();
 
-const authBtn = document.getElementById('auth-btn');
-const modalOverlay = document.getElementById('modal-overlay');
-const cancelBtn = document.getElementById('cancel-btn');
-const proceedBtn = document.getElementById('proceed-btn');
-const agreeCheck = document.getElementById('agree-check');
-const errorMsg = document.getElementById('error-msg');
+    const authBtn = document.getElementById('auth-btn');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const modalContent = document.getElementById('modal-content');
+    const cancelBtn = document.getElementById('cancel-btn');
+    const proceedBtn = document.getElementById('proceed-btn');
+    const agreeCheck = document.getElementById('agree-check');
+    const errorMsg = document.getElementById('error-msg');
 
-authBtn.addEventListener('click', () => {
-modalOverlay.classList.remove('hidden');
-agreeCheck.checked = false;
-errorMsg.classList.add('hidden');
-});
+    function openModal() {
+        modalOverlay.classList.remove('hidden');
+        requestAnimationFrame(() => {
+            modalContent.classList.remove('scale-95', 'opacity-0');
+            modalContent.classList.add('scale-100', 'opacity-100');
+        });
+        agreeCheck.checked = false;
+        errorMsg.classList.add('hidden');
+    }
 
-cancelBtn.addEventListener('click', () => {
-modalOverlay.classList.add('hidden');
-});
+    function closeModal() {
+        modalContent.classList.remove('scale-100', 'opacity-100');
+        modalContent.classList.add('scale-95', 'opacity-0');
+        setTimeout(() => {
+            modalOverlay.classList.add('hidden');
+        }, 300);
+    }
 
-modalOverlay.addEventListener('click', (e) => {
-if (e.target === modalOverlay) {
-modalOverlay.classList.add('hidden');
-}
-});
+    authBtn.addEventListener('click', openModal);
+    cancelBtn.addEventListener('click', closeModal);
 
-proceedBtn.addEventListener('click', () => {
-if (agreeCheck.checked) {
-window.location.href = 'https://discord.com/oauth2/authorize?client_id=1483972240084177136';
-} else {
-errorMsg.classList.remove('hidden');
-}
-});
+    modalOverlay.addEventListener('click', (e) => {
+        if (e.target === modalOverlay) {
+            closeModal();
+        }
+    });
 
-agreeCheck.addEventListener('change', () => {
-if (agreeCheck.checked) {
-errorMsg.classList.add('hidden');
-}
-});
+    proceedBtn.addEventListener('click', () => {
+        if (agreeCheck.checked) {
+            window.location.href = 'https://discord.com/oauth2/authorize?client_id=1483972240084177136';
+        } else {
+            errorMsg.classList.remove('hidden');
+            modalContent.animate([
+                { transform: 'translateX(0px)' },
+                { transform: 'translateX(-5px)' },
+                { transform: 'translateX(5px)' },
+                { transform: 'translateX(-5px)' },
+                { transform: 'translateX(5px)' },
+                { transform: 'translateX(0px)' }
+            ], { duration: 400, easing: 'ease-in-out' });
+        }
+    });
+
+    agreeCheck.addEventListener('change', () => {
+        if (agreeCheck.checked) {
+            errorMsg.classList.add('hidden');
+        }
+    });
 </script>
 </body>
 </html>
