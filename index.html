@@ -8,9 +8,12 @@
 <script src="https://unpkg.com/lucide@latest"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
 <style>
+    :root {
+        --bg-color: #F9FAFB;
+    }
     body {
         font-family: 'Inter', sans-serif;
-        background-color: #ffffff;
+        background-color: var(--bg-color);
         color: #000000;
         overflow-x: hidden;
     }
@@ -24,10 +27,7 @@
     }
 
     .bg-mesh {
-        background-color: #ffffff;
-        background-image: 
-            radial-gradient(at 0% 0%, rgba(243, 244, 246, 1) 0, transparent 50%), 
-            radial-gradient(at 100% 0%, rgba(243, 244, 246, 1) 0, transparent 50%);
+        background-color: var(--bg-color);
     }
 
     .bg-gradient-black {
@@ -42,27 +42,27 @@
     }
 
     .card-shadow {
-        box-shadow: 0 4px 24px -8px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0,0,0,0.02);
+        box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.04);
     }
     
     .hover-card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0,0,0,0.05);
+        box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.08);
     }
 
     .btn-glow {
-        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
     
     .btn-glow:hover {
-        box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.3);
         transform: translateY(-2px);
     }
 
     @keyframes float {
         0% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
+        50% { transform: translateY(-8px); }
         100% { transform: translateY(0px); }
     }
     .animate-float {
@@ -86,27 +86,71 @@
         transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
 
-    .desktop-filler {
+    /* Desktop Sidebar Fillers */
+    .desktop-sidebar {
         position: fixed;
         top: 0;
         bottom: 0;
-        width: 15vw;
-        pointer-events: none;
-        z-index: 0;
+        width: 280px;
+        z-index: 5;
         display: none;
+        padding: 40px;
     }
 
-    @media (min-width: 1536px) {
-        .desktop-filler {
-            display: block;
+    @media (min-width: 1440px) {
+        .desktop-sidebar {
+            display: flex;
+            flex-direction: column;
         }
     }
 </style>
 </head>
 <body class="min-h-screen flex flex-col items-center selection:bg-black selection:text-white bg-mesh">
 
-<div class="desktop-filler left-0 border-r border-gray-50 opacity-50 bg-gradient-to-r from-gray-50 to-transparent"></div>
-<div class="desktop-filler right-0 border-l border-gray-50 opacity-50 bg-gradient-to-l from-gray-50 to-transparent"></div>
+<!-- Left Sidebar Filler -->
+<aside class="desktop-sidebar left-0 unselectable">
+    <div class="mt-20 space-y-12">
+        <div class="space-y-4">
+            <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400">Security Pulse</h4>
+            <div class="flex items-center gap-3 text-sm font-medium text-gray-600">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                </span>
+                Algorithm: AES-GCM 256
+            </div>
+            <div class="flex items-center gap-3 text-sm font-medium text-gray-600">
+                <i data-lucide="activity" class="w-4 h-4"></i>
+                Uptime: 99.9%
+            </div>
+        </div>
+        <div class="space-y-4">
+            <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400">Integrations</h4>
+            <div class="flex flex-wrap gap-2">
+                <span class="px-3 py-1 bg-white border border-gray-200 rounded-lg text-xs font-bold shadow-sm">Discord v14</span>
+                <span class="px-3 py-1 bg-white border border-gray-200 rounded-lg text-xs font-bold shadow-sm">Slash Cmds</span>
+                <span class="px-3 py-1 bg-white border border-gray-200 rounded-lg text-xs font-bold shadow-sm">Auto-Mod</span>
+            </div>
+        </div>
+    </div>
+</aside>
+
+<!-- Right Sidebar Filler -->
+<aside class="desktop-sidebar right-0 unselectable">
+    <div class="mt-20 space-y-12">
+        <div class="space-y-4">
+            <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400">Recent Updates</h4>
+            <div class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm space-y-2">
+                <div class="text-xs font-bold text-black">Patch v2.4.0</div>
+                <p class="text-[11px] text-gray-500 leading-normal">Implemented Ephemeral responses for privacy-first decryption flows.</p>
+            </div>
+            <div class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm space-y-2">
+                <div class="text-xs font-bold text-black">New Feature</div>
+                <p class="text-[11px] text-gray-500 leading-normal">Bulk whitelisting via CSV IDs is now supported in /encrypt.</p>
+            </div>
+        </div>
+    </div>
+</aside>
 
 <nav class="w-full max-w-6xl px-6 py-8 flex justify-center items-center z-10 relative unselectable">
     <div class="flex items-center gap-3">
