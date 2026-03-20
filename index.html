@@ -10,13 +10,13 @@
 <style>
     body {
         font-family: 'Inter', sans-serif;
-        background-color: #ffffff; /* Changed to pure white */
+        background-color: #ffffff;
         color: #000000;
         overflow-x: hidden;
     }
     
     .bg-mesh {
-        background-color: #ffffff; /* Removed radial gradients for pure white background */
+        background-color: #ffffff;
     }
 
     .bg-gradient-black {
@@ -78,22 +78,19 @@
 </head>
 <body class="min-h-screen flex flex-col items-center selection:bg-black selection:text-white bg-mesh">
 
-<!-- Navigation -->
 <nav class="w-full max-w-6xl px-6 py-8 flex justify-center items-center z-10 relative">
     <div class="flex items-center gap-3">
-        <img src="logo.png" alt="Fencrypt Logo" class="h-10 w-auto object-contain drop-shadow-sm" onerror="this.style.display='none'">
+        <img src="Fencrypt_icon.png" alt="Fencrypt Logo" class="h-10 w-auto object-contain drop-shadow-sm" onerror="this.style.display='none'">
         <div class="text-2xl font-extrabold tracking-widest text-gradient-black uppercase">Fencrypt</div>
     </div>
 </nav>
 
-<!-- Main Content -->
 <main class="w-full max-w-6xl px-6 flex-grow flex flex-col items-center pb-24 z-10 relative">
     
-    <!-- Hero Section -->
     <div class="w-full flex justify-center mb-8 mt-4 lg:mt-12 opacity-0 animate-fade-up" style="animation-delay: 0.1s;">
         <div class="relative animate-float">
             <div class="absolute inset-0 bg-gray-200 rounded-full blur-3xl opacity-20 -z-10 transform scale-110"></div>
-            <img src="banner.png" alt="Fencrypt Banner" class="max-w-full h-auto max-h-56 object-contain drop-shadow-xl" onerror="this.style.display='none'">
+            <img src="Fencrypt_banner.png" alt="Fencrypt Banner" class="max-w-full h-auto max-h-56 object-contain drop-shadow-xl" onerror="this.style.display='none'">
         </div>
     </div>
 
@@ -115,7 +112,6 @@
         </div>
     </div>
 
-    <!-- Command Reference -->
     <div id="commands" class="w-full pt-12 opacity-0 animate-fade-up" style="animation-delay: 0.4s;">
         <div class="text-center mb-12">
             <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-gradient-black tracking-tight">Command Reference</h2>
@@ -124,7 +120,6 @@
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             
-            <!-- Encrypt Card -->
             <div class="bg-white border border-gray-100 rounded-[2rem] p-8 card-shadow transition-all duration-300 hover-card flex flex-col relative overflow-hidden group">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-bl-full -z-10 group-hover:bg-gray-100 transition-colors"></div>
                 <div class="w-14 h-14 bg-white border shadow-sm rounded-2xl flex items-center justify-center mb-6">
@@ -157,7 +152,6 @@
                 </div>
             </div>
 
-            <!-- Decrypt Card -->
             <div class="bg-white border border-gray-100 rounded-[2rem] p-8 card-shadow transition-all duration-300 hover-card flex flex-col relative overflow-hidden group">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-bl-full -z-10 group-hover:bg-gray-100 transition-colors"></div>
                 <div class="w-14 h-14 bg-white border shadow-sm rounded-2xl flex items-center justify-center mb-6">
@@ -186,7 +180,6 @@
                 </div>
             </div>
 
-            <!-- Context Menu Card -->
             <div class="bg-white border border-gray-100 rounded-[2rem] p-8 card-shadow transition-all duration-300 hover-card flex flex-col relative overflow-hidden group">
                 <div class="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-bl-full -z-10 group-hover:bg-gray-100 transition-colors"></div>
                 <div class="w-14 h-14 bg-white border shadow-sm rounded-2xl flex items-center justify-center mb-6">
@@ -210,12 +203,10 @@
     </div>
 </main>
 
-<!-- Footer -->
 <footer class="w-full py-8 border-t border-gray-100 mt-auto text-center z-10 relative bg-white/50 backdrop-blur-sm">
     <p class="text-gray-400 text-sm font-medium">© 2026 Fencrypt. All rights reserved.</p>
 </footer>
 
-<!-- Modal -->
 <div id="modal-overlay" class="fixed inset-0 bg-black/40 hidden z-50 flex items-center justify-center p-4">
     <div id="modal-content" class="modal-content bg-white rounded-[2rem] max-w-md w-full p-8 shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
         <div class="flex items-center gap-3 mb-5 text-red-600 bg-red-50 p-3 rounded-2xl w-fit">
