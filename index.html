@@ -9,7 +9,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&display=swap" rel="stylesheet">
 <style>
     :root {
-        --bg-color: #F9FAFB;
+        /* Set to pure white to ensure no border lines with image assets */
+        --bg-color: #ffffff;
     }
     body {
         font-family: 'Inter', sans-serif;
@@ -24,6 +25,17 @@
         -ms-user-select: none;
         user-select: none;
         -webkit-user-drag: none;
+        pointer-events: none; /* Prevents dragging images */
+    }
+
+    /* Scaling the entire site by 125% on desktop */
+    @media (min-width: 1024px) {
+        #site-wrapper {
+            transform: scale(1.25);
+            transform-origin: top center;
+            width: 80%; /* Adjusted width to account for scale expansion */
+            margin-bottom: 25vh; /* Extra space at bottom to account for scaled height */
+        }
     }
 
     .bg-mesh {
@@ -85,199 +97,140 @@
     .modal-content {
         transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-
-    /* Desktop Sidebar Fillers */
-    .desktop-sidebar {
-        position: fixed;
-        top: 0;
-        bottom: 0;
-        width: 280px;
-        z-index: 5;
-        display: none;
-        padding: 40px;
-    }
-
-    @media (min-width: 1440px) {
-        .desktop-sidebar {
-            display: flex;
-            flex-direction: column;
-        }
-    }
 </style>
 </head>
 <body class="min-h-screen flex flex-col items-center selection:bg-black selection:text-white bg-mesh">
 
-<!-- Left Sidebar Filler -->
-<aside class="desktop-sidebar left-0 unselectable">
-    <div class="mt-20 space-y-12">
-        <div class="space-y-4">
-            <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400">Security Pulse</h4>
-            <div class="flex items-center gap-3 text-sm font-medium text-gray-600">
-                <span class="relative flex h-2 w-2">
-                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                  <span class="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
-                </span>
-                Algorithm: AES-GCM 256
-            </div>
-            <div class="flex items-center gap-3 text-sm font-medium text-gray-600">
-                <i data-lucide="activity" class="w-4 h-4"></i>
-                Uptime: 99.9%
-            </div>
+<div id="site-wrapper" class="flex flex-col items-center w-full">
+    <nav class="w-full max-w-6xl px-6 py-12 flex justify-center items-center z-10 relative">
+        <div class="flex items-center gap-3 unselectable">
+            <img src="logo.png" alt="Fencrypt Logo" class="h-10 w-auto object-contain">
+            <div class="text-2xl font-extrabold tracking-widest text-gradient-black uppercase">Fencrypt</div>
         </div>
-        <div class="space-y-4">
-            <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400">Integrations</h4>
-            <div class="flex flex-wrap gap-2">
-                <span class="px-3 py-1 bg-white border border-gray-200 rounded-lg text-xs font-bold shadow-sm">Discord v14</span>
-                <span class="px-3 py-1 bg-white border border-gray-200 rounded-lg text-xs font-bold shadow-sm">Slash Cmds</span>
-                <span class="px-3 py-1 bg-white border border-gray-200 rounded-lg text-xs font-bold shadow-sm">Auto-Mod</span>
-            </div>
-        </div>
-    </div>
-</aside>
+    </nav>
 
-<!-- Right Sidebar Filler -->
-<aside class="desktop-sidebar right-0 unselectable">
-    <div class="mt-20 space-y-12">
-        <div class="space-y-4">
-            <h4 class="text-xs font-bold uppercase tracking-widest text-gray-400">Recent Updates</h4>
-            <div class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm space-y-2">
-                <div class="text-xs font-bold text-black">Patch v2.4.0</div>
-                <p class="text-[11px] text-gray-500 leading-normal">Implemented Ephemeral responses for privacy-first decryption flows.</p>
-            </div>
-            <div class="p-4 bg-white border border-gray-200 rounded-2xl shadow-sm space-y-2">
-                <div class="text-xs font-bold text-black">New Feature</div>
-                <p class="text-[11px] text-gray-500 leading-normal">Bulk whitelisting via CSV IDs is now supported in /encrypt.</p>
-            </div>
-        </div>
-    </div>
-</aside>
-
-<nav class="w-full max-w-6xl px-6 py-8 flex justify-center items-center z-10 relative unselectable">
-    <div class="flex items-center gap-3">
-        <img src="logo.png" alt="Fencrypt Logo" class="h-10 w-auto object-contain">
-        <div class="text-2xl font-extrabold tracking-widest text-gradient-black uppercase">Fencrypt</div>
-    </div>
-</nav>
-
-<main class="w-full max-w-6xl px-6 flex-grow flex flex-col items-center pb-24 z-10 relative">
-    
-    <div class="w-full flex justify-center mb-8 mt-4 lg:mt-12 opacity-0 animate-fade-up" style="animation-delay: 0.1s;">
-        <div class="relative animate-float unselectable">
-            <img src="banner.png" alt="Fencrypt Banner" class="max-w-full h-auto max-h-56 object-contain">
-        </div>
-    </div>
-
-    <div class="text-center max-w-3xl mb-24 opacity-0 animate-fade-up" style="animation-delay: 0.2s;">
-        <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-gradient-black tracking-tighter leading-tight">
-            Secure Your Discord.
-        </h1>
-        <p class="text-gray-500 text-lg md:text-xl mb-10 leading-relaxed max-w-2xl mx-auto font-medium">
-            Advanced string and media encryption algorithm directly integrated into your server. Keep your sensitive data locked down with UI-based whitelisting.
-        </p>
-        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-            <button id="auth-btn" class="bg-gradient-black text-white font-semibold py-4 px-10 rounded-2xl text-lg btn-glow inline-flex items-center gap-3 w-full sm:w-auto justify-center border border-gray-800">
-                <i data-lucide="shield-check" class="w-6 h-6"></i>
-                Authorize App
-            </button>
-            <a href="#commands" class="py-4 px-10 rounded-2xl text-lg font-semibold text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 transition-all w-full sm:w-auto text-center card-shadow">
-                View Commands
-            </a>
-        </div>
-    </div>
-
-    <div id="commands" class="w-full pt-12 opacity-0 animate-fade-up" style="animation-delay: 0.4s;">
-        <div class="text-center mb-12">
-            <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-gradient-black tracking-tight">Command Reference</h2>
-            <p class="text-gray-500 font-medium">Everything you need to secure your server's communications.</p>
-        </div>
+    <main class="w-full max-w-6xl px-6 flex-grow flex flex-col items-center pb-24 z-10 relative">
         
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-            <div class="bg-white border border-gray-100 rounded-[2rem] p-8 card-shadow transition-all duration-300 hover-card flex flex-col relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-bl-full -z-10 group-hover:bg-gray-100 transition-colors"></div>
-                <div class="w-14 h-14 bg-white border shadow-sm rounded-2xl flex items-center justify-center mb-6">
-                    <i data-lucide="lock" class="text-black w-7 h-7"></i>
-                </div>
-                <h3 class="text-2xl font-bold mb-3 tracking-tight">/encrypt</h3>
-                <p class="text-gray-500 text-sm mb-8 flex-grow leading-relaxed">Encrypt text and optional media. Generates a cipher or a downloadable hash file.</p>
-                <div class="space-y-4 pt-6 border-t border-gray-100">
-                    <div class="flex flex-col gap-1">
-                        <span class="font-bold text-sm text-gray-900 flex justify-between">message <span class="text-red-500 text-xs font-semibold bg-red-50 px-2 py-0.5 rounded">Required</span></span>
-                        <span class="text-xs text-gray-500">Target string to encrypt.</span>
-                    </div>
-                    <div class="flex flex-col gap-1">
-                        <span class="font-bold text-sm text-gray-900 flex justify-between">whitelist_ids <span class="text-gray-400 text-xs font-medium">Optional</span></span>
-                        <span class="text-xs text-gray-500">Comma-separated Discord IDs.</span>
-                    </div>
-                    <div class="flex flex-col gap-1">
-                        <span class="font-bold text-sm text-gray-900 flex justify-between">media_upload <span class="text-gray-400 text-xs font-medium">Optional</span></span>
-                        <span class="text-xs text-gray-500">Upload Image/GIF (max 10MB).</span>
-                    </div>
-                    <div class="flex flex-col gap-1">
-                        <span class="font-bold text-sm text-gray-900 flex justify-between">media_link <span class="text-gray-400 text-xs font-medium">Optional</span></span>
-                        <span class="text-xs text-gray-500">Image/GIF URL (max 10MB).</span>
-                    </div>
-                    <div class="flex flex-col gap-1">
-                        <span class="font-bold text-sm text-gray-900 flex justify-between">ephemeral <span class="text-gray-400 text-xs font-medium">Optional</span></span>
-                        <span class="text-xs text-gray-500">Hide output from others.</span>
-                    </div>
-                </div>
+        <!-- Removed shadow from banner container -->
+        <div class="w-full flex justify-center mb-12 mt-4 lg:mt-12 opacity-0 animate-fade-up" style="animation-delay: 0.1s;">
+            <div class="relative animate-float unselectable">
+                <img src="banner.png" alt="Fencrypt Banner" class="max-w-full h-auto max-h-64 object-contain">
             </div>
+        </div>
 
-            <div class="bg-white border border-gray-100 rounded-[2rem] p-8 card-shadow transition-all duration-300 hover-card flex flex-col relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-bl-full -z-10 group-hover:bg-gray-100 transition-colors"></div>
-                <div class="w-14 h-14 bg-white border shadow-sm rounded-2xl flex items-center justify-center mb-6">
-                    <i data-lucide="unlock" class="text-black w-7 h-7"></i>
-                </div>
-                <h3 class="text-2xl font-bold mb-3 tracking-tight">/decrypt</h3>
-                <p class="text-gray-500 text-sm mb-8 flex-grow leading-relaxed">Decrypt a String or File. Validates against the whitelist automatically.</p>
-                <div class="space-y-4 pt-6 border-t border-gray-100">
-                    <div class="flex flex-col gap-1">
-                        <span class="font-bold text-sm text-gray-900 flex justify-between">hash_str <span class="text-blue-500 text-xs font-semibold bg-blue-50 px-2 py-0.5 rounded">Required*</span></span>
-                        <span class="text-xs text-gray-500">Ciphertext to process.</span>
-                    </div>
-                    <div class="flex flex-col gap-1">
-                        <span class="font-bold text-sm text-gray-900 flex justify-between">file <span class="text-blue-500 text-xs font-semibold bg-blue-50 px-2 py-0.5 rounded">Required*</span></span>
-                        <span class="text-xs text-gray-500">Upload .txt file if hash is too large.</span>
-                    </div>
-                    <div class="flex flex-col gap-1">
-                        <span class="font-bold text-sm text-gray-900 flex justify-between">ephemeral <span class="text-gray-400 text-xs font-medium">Optional</span></span>
-                        <span class="text-xs text-gray-500">Hide output from others.</span>
-                    </div>
-                    <div class="mt-4 p-3 bg-gray-50 rounded-xl border border-gray-100 text-xs text-gray-500 font-medium">
-                        <i data-lucide="info" class="inline w-3 h-3 mr-1"></i>
-                        *Must provide either hash_str or file.
-                    </div>
-                </div>
+        <div class="text-center max-w-3xl mb-24 opacity-0 animate-fade-up" style="animation-delay: 0.2s;">
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold mb-6 text-gradient-black tracking-tighter leading-tight">
+                Secure Your Discord.
+            </h1>
+            <p class="text-gray-500 text-lg md:text-xl mb-10 leading-relaxed max-w-2xl mx-auto font-medium">
+                Advanced string and media encryption algorithm directly integrated into your server. Keep your sensitive data locked down with UI-based whitelisting.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                <button id="auth-btn" class="bg-gradient-black text-white font-semibold py-4 px-10 rounded-2xl text-lg btn-glow inline-flex items-center gap-3 w-full sm:w-auto justify-center border border-gray-800">
+                    <i data-lucide="shield-check" class="w-6 h-6"></i>
+                    Authorize App
+                </button>
+                <a href="#commands" class="py-4 px-10 rounded-2xl text-lg font-semibold text-gray-700 bg-white border border-gray-200 hover:bg-gray-50 transition-all w-full sm:w-auto text-center card-shadow">
+                    View Commands
+                </a>
             </div>
+        </div>
 
-            <div class="bg-white border border-gray-100 rounded-[2rem] p-8 card-shadow transition-all duration-300 hover-card flex flex-col relative overflow-hidden group">
-                <div class="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-bl-full -z-10 group-hover:bg-gray-100 transition-colors"></div>
-                <div class="w-14 h-14 bg-white border shadow-sm rounded-2xl flex items-center justify-center mb-6">
-                    <i data-lucide="mouse-pointer-click" class="text-black w-7 h-7"></i>
+        <div id="commands" class="w-full pt-12 opacity-0 animate-fade-up" style="animation-delay: 0.4s;">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-4 text-gradient-black tracking-tight">Command Reference</h2>
+                <p class="text-gray-500 font-medium">Everything you need to secure your server's communications.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                <div class="bg-white border border-gray-100 rounded-[2rem] p-8 card-shadow transition-all duration-300 hover-card flex flex-col relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-bl-full -z-10 group-hover:bg-gray-100 transition-colors"></div>
+                    <div class="w-14 h-14 bg-white border shadow-sm rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="lock" class="text-black w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 tracking-tight">/encrypt</h3>
+                    <p class="text-gray-500 text-sm mb-8 flex-grow leading-relaxed">Encrypt text and optional media. Generates a cipher or a downloadable hash file.</p>
+                    <div class="space-y-4 pt-6 border-t border-gray-100">
+                        <div class="flex flex-col gap-1">
+                            <span class="font-bold text-sm text-gray-900 flex justify-between">message <span class="text-red-500 text-xs font-semibold bg-red-50 px-2 py-0.5 rounded">Required</span></span>
+                            <span class="text-xs text-gray-500">Target string to encrypt.</span>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <span class="font-bold text-sm text-gray-900 flex justify-between">whitelist_ids <span class="text-gray-400 text-xs font-medium">Optional</span></span>
+                            <span class="text-xs text-gray-500">Comma-separated Discord IDs.</span>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <span class="font-bold text-sm text-gray-900 flex justify-between">media_upload <span class="text-gray-400 text-xs font-medium">Optional</span></span>
+                            <span class="text-xs text-gray-500">Upload Image/GIF (max 10MB).</span>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <span class="font-bold text-sm text-gray-900 flex justify-between">media_link <span class="text-gray-400 text-xs font-medium">Optional</span></span>
+                            <span class="text-xs text-gray-500">Image/GIF URL (max 10MB).</span>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <span class="font-bold text-sm text-gray-900 flex justify-between">ephemeral <span class="text-gray-400 text-xs font-medium">Optional</span></span>
+                            <span class="text-xs text-gray-500">Hide output from others.</span>
+                        </div>
+                    </div>
                 </div>
-                <h3 class="text-2xl font-bold mb-3 tracking-tight">Context Menu</h3>
-                <p class="text-gray-500 text-sm mb-8 flex-grow leading-relaxed">Quickly select media (Images/GIFs) from chat without downloading it.</p>
-                <div class="bg-gray-50 p-5 rounded-2xl border border-gray-100 pt-6">
-                    <p class="text-sm font-bold mb-3 text-gray-900">How to use:</p>
-                    <ol class="text-sm text-gray-600 list-decimal pl-4 space-y-2 font-medium">
-                        <li>Right click any message with media.</li>
-                        <li>Go to <strong class="text-black">Apps</strong>.</li>
-                        <li>Select <strong class="text-black">Choose media</strong>.</li>
-                        <li>Run <code class="bg-white border shadow-sm px-1.5 py-0.5 rounded text-black font-semibold">/encrypt</code> to process.</li>
-                    </ol>
+
+                <div class="bg-white border border-gray-100 rounded-[2rem] p-8 card-shadow transition-all duration-300 hover-card flex flex-col relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-bl-full -z-10 group-hover:bg-gray-100 transition-colors"></div>
+                    <div class="w-14 h-14 bg-white border shadow-sm rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="unlock" class="text-black w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 tracking-tight">/decrypt</h3>
+                    <p class="text-gray-500 text-sm mb-8 flex-grow leading-relaxed">Decrypt a String or File. Validates against the whitelist automatically.</p>
+                    <div class="space-y-4 pt-6 border-t border-gray-100">
+                        <div class="flex flex-col gap-1">
+                            <span class="font-bold text-sm text-gray-900 flex justify-between">hash_str <span class="text-blue-500 text-xs font-semibold bg-blue-50 px-2 py-0.5 rounded">Required*</span></span>
+                            <span class="text-xs text-gray-500">Ciphertext to process.</span>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <span class="font-bold text-sm text-gray-900 flex justify-between">file <span class="text-blue-500 text-xs font-semibold bg-blue-50 px-2 py-0.5 rounded">Required*</span></span>
+                            <span class="text-xs text-gray-500">Upload .txt file if hash is too large.</span>
+                        </div>
+                        <div class="flex flex-col gap-1">
+                            <span class="font-bold text-sm text-gray-900 flex justify-between">ephemeral <span class="text-gray-400 text-xs font-medium">Optional</span></span>
+                            <span class="text-xs text-gray-500">Hide output from others.</span>
+                        </div>
+                        <div class="mt-4 p-3 bg-gray-50 rounded-xl border border-gray-100 text-xs text-gray-500 font-medium">
+                            <i data-lucide="info" class="inline w-3 h-3 mr-1"></i>
+                            *Must provide either hash_str or file.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white border border-gray-100 rounded-[2rem] p-8 card-shadow transition-all duration-300 hover-card flex flex-col relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-bl-full -z-10 group-hover:bg-gray-100 transition-colors"></div>
+                    <div class="w-14 h-14 bg-white border shadow-sm rounded-2xl flex items-center justify-center mb-6">
+                        <i data-lucide="mouse-pointer-click" class="text-black w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 tracking-tight">Context Menu</h3>
+                    <p class="text-gray-500 text-sm mb-8 flex-grow leading-relaxed">Quickly select media (Images/GIFs) from chat without downloading it.</p>
+                    <div class="bg-gray-50 p-5 rounded-2xl border border-gray-100 pt-6">
+                        <p class="text-sm font-bold mb-3 text-gray-900">How to use:</p>
+                        <ol class="text-sm text-gray-600 list-decimal pl-4 space-y-2 font-medium">
+                            <li>Right click any message with media.</li>
+                            <li>Go to <strong class="text-black">Apps</strong>.</li>
+                            <li>Select <strong class="text-black">Choose media</strong>.</li>
+                            <li>Run <code class="bg-white border shadow-sm px-1.5 py-0.5 rounded text-black font-semibold">/encrypt</code> to process.</li>
+                        </ol>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</main>
+    </main>
 
-<footer class="w-full py-8 border-t border-gray-100 mt-auto text-center z-10 relative bg-white/50 backdrop-blur-sm">
-    <p class="text-gray-400 text-sm font-medium">© 2026 Fencrypt. All rights reserved.</p>
-</footer>
+    <footer class="w-full py-12 border-t border-gray-100 mt-auto text-center z-10 relative bg-white">
+        <p class="text-gray-400 text-sm font-medium unselectable">© 2026 Fencrypt. All rights reserved.</p>
+    </footer>
+</div>
 
+<!-- Modal remains outside site-wrapper to avoid scaling issues -->
 <div id="modal-overlay" class="fixed inset-0 bg-black/40 hidden z-50 flex items-center justify-center p-4">
     <div id="modal-content" class="modal-content bg-white rounded-[2rem] max-w-md w-full p-8 shadow-2xl transform scale-95 opacity-0 transition-all duration-300">
-        <div class="flex items-center gap-3 mb-5 text-red-600 bg-red-50 p-3 rounded-2xl w-fit">
+        <div class="flex items-center gap-3 mb-5 text-red-600 bg-red-50 p-3 rounded-2xl w-fit unselectable">
             <i data-lucide="alert-triangle" class="w-6 h-6"></i>
             <h3 class="text-xl font-bold">Strict Warning</h3>
         </div>
